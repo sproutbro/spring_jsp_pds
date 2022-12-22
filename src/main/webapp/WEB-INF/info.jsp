@@ -13,6 +13,7 @@
 <p>Front : JSP</p>
 <p>Back : Spring</p>
 <p>DB : Maria DB</p>
+<p>Git : https://github.com/sproutbro/spring_jsp_pds</p>
 <br/>
 <p>Spring security</p>
 <p>Scheduler 이용한 만료기간 자동처리</p>
