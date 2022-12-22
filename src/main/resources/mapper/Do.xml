@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cf.eisp.spring_jsp_pds.repository.DoRepository">
+    <insert id="save" parameterType="PlanDo">
+        insert into do (plan_id, do_date, do_state)
+        values (#{planId}, now(), #{doState})
+    </insert>
+    <select id="findAll" resultType="PlanDo">
+        select
+            p.plan_id ,
+            p.plan_title ,
+            p.plan_memo ,
+            p.plan_reg_date ,
+            p.plan_end_date ,
+            p.username ,
+            p.plan_category ,
+            d.do_id ,
+            d.do_date ,
+            d.do_state
+        from
+            plan p left join do d
+                on p.plan_id = d.plan_id
+        where do_id is not null
+            and plan_private = 'Y'
+    </select>
+</mapper>

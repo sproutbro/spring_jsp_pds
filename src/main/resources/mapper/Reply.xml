@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cf.eisp.spring_jsp_pds.repository.ReplyRepository">
+    <insert id="save" parameterType="Reply">
+        insert into reply (plan_id, username, reply_memo, reply_date, replay_password)
+        values (#{planId}, #{username}, #{replyMemo}, now(), #{replyPassword})
+    </insert>
+    <select id="findByPlanId" parameterType="Integer" resultType="Reply">
+        select * from reply where plan_Id = #{planId}
+    </select>
+</mapper>

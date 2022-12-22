@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cf.eisp.spring_jsp_pds.repository.PlanRepository">
+    <insert id="save">
+        insert into plan
+            (plan_title,
+             plan_memo,
+             plan_reg_date,
+             plan_end_date,
+             username,
+             plan_category,
+             plan_private)
+        values (#{planTitle},
+                #{planMemo},
+                now(),
+                #{inputDate},
+                #{username},
+                #{planCategory},
+                #{planPrivate})
+    </insert>
+    <select id="findAll" resultType="Plan">
+        select
+            p.plan_id,
+            p.plan_title,
+            p.plan_end_date,
+            p.plan_reg_date,
+            p.username,
+            r.reply_count
+        from plan p
+             left join
+                 do d
+             on p.plan_id = d.plan_id
+             left join
+                 (select
+                    plan_id,
+                    count(plan_id) as reply_count
+                 from reply
+                 group by plan_id) r
+             on p.plan_id = r.plan_id
+        where
+            do_id is null and plan_private = 'Y'
+        order by plan_end_date asc
+    </select>
+    <delete id="delete" parameterType="Integer">
+        delete
+        from plan
+        where plan_id = #{planId}
+    </delete>
+    <select id="findByUsername" parameterType="String" resultType="Plan">
+        select p.* from plan p
+                            left join do d on p.plan_id = d.plan_id
+        where do_id is null and username = #{username}
+        order by plan_end_date asc
+    </select>
+    <select id="findByPlanId" parameterType="Integer" resultType="Plan">
+        select * from plan
+        where plan_id = #{planId}
+    </select>
+</mapper>
