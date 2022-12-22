@@ -15,5 +15,7 @@ public interface DoRepository {
     Integer update(PlanDo planDo);
     Integer delete(Integer planId);
 
+    void updateDoByFailPlan();
+
 
 }

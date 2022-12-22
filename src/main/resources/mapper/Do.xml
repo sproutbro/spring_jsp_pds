@@ -24,4 +24,16 @@
         where do_id is not null
             and plan_private = 'Y'
     </select>
+
+    <insert id="updateDoByFailPlan">
+        INSERT INTO do (plan_id, do_date, do_state)
+
+        SELECT
+            p.plan_id, now(), 'N'
+        FROM plan p
+                 LEFT JOIN do d
+                           ON p.plan_id = d.plan_id
+        WHERE d.plan_id is null
+          AND p.plan_end_date &lt; now()
+    </insert>
 </mapper>

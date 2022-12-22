@@ -13,10 +13,13 @@ import java.util.List;
 public class Scheduler {
     private final DoRepository doRepository;
 
-    // 1분마다 doList 출력
+    /**
+     * 이용한 만료기간 자동처리 로직 완료 - 윤병우
+     * 추가 보완 사항 : update 시 로그 기록 남겨야함
+     */
     @Scheduled(cron = "0 * * * * *")
     public void updatePlanState() {
-        List<PlanDo> list = doRepository.findAll();
-        System.out.println(list);
+        doRepository.updateDoByFailPlan();
+        System.out.println("");
     }
 }
