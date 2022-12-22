@@ -18,7 +18,7 @@ public class IndexController {
     public String index(Model model) {
         List<Plan> planList = planRepository.findAll();
         model.addAttribute("planList", planList);
-        return "index";
+        return "main";
     }
 
     @GetMapping("/info")
