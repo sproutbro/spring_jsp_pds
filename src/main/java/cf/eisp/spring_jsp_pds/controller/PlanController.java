@@ -1,5 +1,6 @@
 package cf.eisp.spring_jsp_pds.controller;
 
+import cf.eisp.spring_jsp_pds.model.CustomPlan2;
 import cf.eisp.spring_jsp_pds.model.Plan;
 import cf.eisp.spring_jsp_pds.model.PlanDo;
 import cf.eisp.spring_jsp_pds.model.Reply;
@@ -37,24 +38,6 @@ public class PlanController {
         return "plan";
     }
 
-    @GetMapping("/{id}")
-    public String findByPlanId(
-            @PathVariable String id,
-            Model model,
-            Principal principal) {
-        Integer planId = Integer.valueOf(id);
-        Plan plan = planRepository.findByPlanId(planId);
-
-        if (plan.getPlanPrivate().equals("Y")) {
-//            공개
-            getPlanAndReply(model, plan, replyRepository);
-        } else if (plan.getUsername().equals(principal.getName())) {
-//            비공개 유저네임 비교후
-            getPlanAndReply(model, plan, replyRepository);
-        }
-        return "planDetail";
-    }
-
     @GetMapping("/write")
     public String planWrite() {
 
@@ -67,7 +50,7 @@ public class PlanController {
         plan.setPlanPrivate("Y");
         plan.setUsername(principal.getName());
         planRepository.save(plan);
-        return "plan";
+        return "redirect:plan";
     }
 
     @PostMapping("/check")
@@ -77,9 +60,4 @@ public class PlanController {
     }
 
 
-    private static void getPlanAndReply(Model model, Plan plan, ReplyRepository replyRepository) {
-        model.addAttribute("plan", plan);
-        List<Reply> replyList = replyRepository.findByPlanId(plan.getPlanId());
-        model.addAttribute("replyList", replyList);
-    }
 }

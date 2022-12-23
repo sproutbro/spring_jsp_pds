@@ -1,6 +1,8 @@
 package cf.eisp.spring_jsp_pds.repository;
 
+import cf.eisp.spring_jsp_pds.model.CustomPlan2;
 import cf.eisp.spring_jsp_pds.model.Plan;
+import cf.eisp.spring_jsp_pds.model.CustomPlan1;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,11 +11,11 @@ import java.util.List;
 public interface PlanRepository {
     Integer save(Plan plan);
 
-    List<Plan> findAll();
+    List<CustomPlan1> findAll();
 
     Integer delete(Integer planId);
 
     List<Plan> findByUsername(String username);
 
-    Plan findByPlanId(Integer planId);
+    CustomPlan2 findByPlanId(Integer planId);
 }

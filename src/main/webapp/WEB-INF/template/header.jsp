@@ -7,14 +7,13 @@
         <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/">PDS</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/info">Info</a>
-        </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">User</a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="/login">Login</a></li>
                 <li><a class="dropdown-item" href="/join">Join</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/info">Info</a></li>
             </ul>
         </li>
     </ul>
@@ -39,6 +38,8 @@
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="/logout">logout</a></li>
                 <li><a class="dropdown-item" href="/">정보수정</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="/info">Info</a></li>
             </ul>
         </li>
     </ul>

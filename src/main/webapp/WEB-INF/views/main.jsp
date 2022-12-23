@@ -1,22 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <table class="table">
     <thead>
         <tr>
             <th scope="col-8">제목</th>
-            <th scope="col-2">댓글</th>
-            <th scope="col-2">d-day</th>
+            <th scope="col-1">Do</th>
+            <th scope="col-1">Re</th>
+            <th scope="col-1">See</th>
+            <th scope="col-1">Day</th>
         </tr>
     </thead>
     <tbody>
-    <c:forEach var="plan" items="${planList}">
+    <c:forEach var="v" items="${planList}">
         <tr>
-            <td><a href="/plan/${plan.planId}">${plan.planTitle}</a></td>
-            <td>${plan.replyCount}</td>
+            <td><a href="/detail/${v.planId}">${v.planTitle}</a></td>
+            <td>${v.doState}</td>
+            <td>${v.replyCount}</td>
+            <td>${v.seeId}</td>
             <td>
-                <fmt:formatDate value="${plan.planEndDate}" pattern="M-dd" type="date"/>
+                <fmt:formatDate value="${v.planEndDate}" pattern="M.dd" type="date"/>
             </td>
         </tr>
     </c:forEach>

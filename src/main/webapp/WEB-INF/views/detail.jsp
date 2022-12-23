@@ -9,9 +9,21 @@
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">카테고리 : ${plan.planCategory}</li>
-            <li class="list-group-item">계획일 : ${plan.planRegDate}</li>
-            <li class="list-group-item">마감일 : ${plan.planEndDate}</li>
+            <li class="list-group-item">계획일 : <fmt:formatDate value="${plan.planRegDate}" pattern="M-dd" type="date"/></li>
+            <li class="list-group-item">마감일 : <fmt:formatDate value="${plan.planEndDate}" pattern="M-dd" type="date"/></li>
         </ul>
+        <c:if test="${plan.doState ne null}">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">완료상태 : ${plan.doState}</li>
+                <li class="list-group-item">완료일자 : <fmt:formatDate value="${plan.doDate}" pattern="M-dd" type="date"/></li>
+            </ul>
+            <c:if test="${plan.seeDate ne null}">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">작성일 : ${plan.seeDate}</li>
+                    <li class="list-group-item">돌아보기 : ${plan.seeMemo}</li>
+                </ul>
+            </c:if>
+        </c:if>
     </div>
     <table class="table">
         <thead>

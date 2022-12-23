@@ -16,7 +16,4 @@ public class Plan {
     private String username;
     private String planPassword;
     private String planCategory;
-
-    //나중에 빼든하자
-    private Integer replyCount;
 }

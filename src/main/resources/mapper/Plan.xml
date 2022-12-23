@@ -19,28 +19,33 @@
                 #{planCategory},
                 #{planPrivate})
     </insert>
-    <select id="findAll" resultType="Plan">
+    <select id="findAll" resultType="CustomPlan1">
         select
             p.plan_id,
             p.plan_title,
-            p.plan_end_date,
             p.plan_reg_date,
-            p.username,
+            p.plan_end_date,
+            d.do_state,
+            s.see_id,
             r.reply_count
-        from plan p
-             left join
-                 do d
-             on p.plan_id = d.plan_id
-             left join
-                 (select
-                    plan_id,
-                    count(plan_id) as reply_count
-                 from reply
-                 group by plan_id) r
-             on p.plan_id = r.plan_id
+        from
+            plan p
+                left join do d
+                          on p.plan_id = d.plan_id
+                left join see s
+                          on d.do_id = s.do_id
+                left join (select
+                               plan_id,
+                               count(plan_id) as reply_count
+                           from
+                               reply
+                           group by
+                               plan_id) r
+                          on r.plan_id = p.plan_id
         where
-            do_id is null and plan_private = 'Y'
-        order by plan_end_date asc
+            p.plan_private = 'Y'
+        order by
+            p.plan_end_date asc
     </select>
     <delete id="delete" parameterType="Integer">
         delete
@@ -53,8 +58,26 @@
         where do_id is null and username = #{username}
         order by plan_end_date asc
     </select>
-    <select id="findByPlanId" parameterType="Integer" resultType="Plan">
-        select * from plan
-        where plan_id = #{planId}
+    <select id="findByPlanId" parameterType="Integer" resultType="CustomPlan2">
+        select
+            p.plan_id,
+            p.username,
+            p.plan_private,
+            p.plan_title,
+            p.plan_reg_date,
+            p.plan_end_date,
+            p.plan_memo,
+            p.plan_category,
+            d.do_state,
+            d.do_date,
+            s.see_memo,
+            s.see_date
+        from
+            plan p
+                left join do d
+                          on p.plan_id = d.plan_id
+                left join see s
+                          on d.do_id = s.do_id
+        where p.plan_id = #{planId}
     </select>
 </mapper>

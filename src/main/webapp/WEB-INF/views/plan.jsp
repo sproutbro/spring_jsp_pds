@@ -10,7 +10,7 @@
     </tr>
     <c:forEach var="plan" items="${planList}">
         <tr>
-            <td><a href="/plan/${plan.planId}">${plan.planTitle}</a></td>
+            <td><a href="/detail/${plan.planId}">${plan.planTitle}</a></td>
             <td><fmt:formatDate value="${plan.planEndDate}" pattern="M-dd" type="date"/></td>
         </tr>
     </c:forEach>
