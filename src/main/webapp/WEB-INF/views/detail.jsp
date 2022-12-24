@@ -6,7 +6,9 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">${plan.planTitle}</h5>
-        <p class="card-text">${plan.planMemo}</p>
+        <pre class="card-text">
+${plan.planMemo}
+        </pre>
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">카테고리 : ${plan.planCategory}</li>
@@ -21,7 +23,11 @@
         <c:if test="${plan.seeDate ne null}">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">작성일 : ${plan.seeDate}</li>
-                <li class="list-group-item">돌아보기 : <br/>${plan.seeMemo}</li>
+                <li class="list-group-item">돌아보기 : <br/>
+                    <pre>
+${plan.seeMemo}
+                    </pre>
+                </li>
             </ul>
         </c:if>
     </c:if>
