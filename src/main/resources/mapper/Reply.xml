@@ -3,10 +3,16 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cf.eisp.spring_jsp_pds.repository.ReplyRepository">
     <insert id="save" parameterType="Reply">
-        insert into reply (plan_id, username, reply_memo, reply_date, replay_password)
-        values (#{planId}, #{username}, #{replyMemo}, now(), #{replyPassword})
+        insert into reply (plan_id, username, reply_memo, reply_date)
+        values (#{planId}, #{username}, #{replyMemo}, now())
     </insert>
     <select id="findByPlanId" parameterType="Integer" resultType="Reply">
         select * from reply where plan_Id = #{planId}
+    </select>
+    <delete id="deleteReply" parameterType="Integer">
+        delete from reply where reply_id = #{replyId}
+    </delete>
+    <select id="findByReplyId" parameterType="Integer" resultType="Reply">
+        select * from reply where reply_id = #{replyId}
     </select>
 </mapper>

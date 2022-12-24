@@ -1,9 +1,7 @@
 package cf.eisp.spring_jsp_pds.controller;
 
-import cf.eisp.spring_jsp_pds.model.CustomPlan2;
 import cf.eisp.spring_jsp_pds.model.Plan;
 import cf.eisp.spring_jsp_pds.model.PlanDo;
-import cf.eisp.spring_jsp_pds.model.Reply;
 import cf.eisp.spring_jsp_pds.repository.DoRepository;
 import cf.eisp.spring_jsp_pds.repository.PlanRepository;
 import cf.eisp.spring_jsp_pds.repository.ReplyRepository;
@@ -11,14 +9,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 @Controller
@@ -46,11 +42,13 @@ public class PlanController {
 
     @PostMapping("/write")
     public String planWriteAction(Plan plan, Principal principal) {
-        System.out.println("plan = " + plan);
-        plan.setPlanPrivate("Y");
         plan.setUsername(principal.getName());
+        if (plan.getPlanPrivate() == null) {
+            plan.setPlanPrivate("N");
+        }
+
         planRepository.save(plan);
-        return "redirect:plan";
+        return "redirect:/plan";
     }
 
     @PostMapping("/check")

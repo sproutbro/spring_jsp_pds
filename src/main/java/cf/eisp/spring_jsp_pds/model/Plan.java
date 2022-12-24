@@ -14,6 +14,5 @@ public class Plan {
     private Timestamp planRegDate;
     private String planPrivate;
     private String username;
-    private String planPassword;
     private String planCategory;
 }

@@ -2,71 +2,77 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication property="name" var="username"/>
 <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">${plan.planTitle}</h5>
-            <p class="card-text">${plan.planMemo}</p>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">카테고리 : ${plan.planCategory}</li>
-            <li class="list-group-item">계획일 : <fmt:formatDate value="${plan.planRegDate}" pattern="M-dd" type="date"/></li>
-            <li class="list-group-item">마감일 : <fmt:formatDate value="${plan.planEndDate}" pattern="M-dd" type="date"/></li>
-        </ul>
-        <c:if test="${plan.doState ne null}">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">완료상태 : ${plan.doState}</li>
-                <li class="list-group-item">완료일자 : <fmt:formatDate value="${plan.doDate}" pattern="M-dd" type="date"/></li>
-            </ul>
-            <c:if test="${plan.seeDate ne null}">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">작성일 : ${plan.seeDate}</li>
-                    <li class="list-group-item">돌아보기 : ${plan.seeMemo}</li>
-                </ul>
-            </c:if>
-        </c:if>
+    <div class="card-body">
+        <h5 class="card-title">${plan.planTitle}</h5>
+        <p class="card-text">${plan.planMemo}</p>
     </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">카테고리 : ${plan.planCategory}</li>
+        <li class="list-group-item">계획일 : <fmt:formatDate value="${plan.planRegDate}" pattern="M-dd" type="date"/></li>
+        <li class="list-group-item">마감일 : <fmt:formatDate value="${plan.planEndDate}" pattern="M-dd" type="date"/></li>
+    </ul>
+    <c:if test="${plan.doState ne null}">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">완료상태 : ${plan.doState}</li>
+            <li class="list-group-item">완료일자 : <fmt:formatDate value="${plan.doDate}" pattern="M-dd" type="date"/></li>
+        </ul>
+        <c:if test="${plan.seeDate ne null}">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">작성일 : ${plan.seeDate}</li>
+                <li class="list-group-item">돌아보기 : ${plan.seeMemo}</li>
+            </ul>
+        </c:if>
+    </c:if>
+</div>
     <table class="table">
         <thead>
             <tr>
                 <th>내용</th>
-                <th>유저</th>
                 <th>날짜</th>
             </tr>
         </thead>
         <tbody>
             <c:forEach var="reply" items="${replyList}">
                 <tr>
-                    <td class="col-8">${reply.replyMemo}</td>
-                    <td class="col-2">${reply.username}</td>
+                    <td class="col-9">${reply.replyMemo}</td>
                     <td class="col-2"><fmt:formatDate value="${plan.planEndDate}" pattern="M-dd" type="date"/></td>
+                    <td class="col-1">
+                        <c:if test="${username eq plan.username || username eq reply.username}">
+                            <a href="/reply/delete/${reply.replyId}">X</a>
+                        </c:if>
+                    </td>
                 </tr>
             </c:forEach>
+            <sec:authorize access="isAuthenticated()">
+                <tr>
+                    <td colspan="3">
+                        <form action="/reply" method="post" class="row">
+                            <input type="hidden" name="planId" value="${plan.planId}">
+                            <div class="col-8">
+                                <input type="text" class="form-control" name="replyMemo">
+                            </div>
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary mb-3">댓글쓰기</button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            </sec:authorize>
         </tbody>
-        <tr>
-            <td colspan="3">
-                <form action="/reply" method="post" class="row">
-                    <div class="col-8">
-                        <input type="text" class="form-control">
-                    </div>
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-primary mb-3">댓글쓰기</button>
-                    </div>
-                </form>
-            </td>
-        </tr>
     </table>
     <div>
-        <sec:authentication property="name" var="username"/>
         <c:if test="${username eq plan.username}">
             <form action="/plan/check" method="post">
                 <input type="hidden" name="planId" value="${plan.planId}">
                 <input type="hidden" name="doState" value="Y">
-                <button type="submit">완료</button>
+                <button class="btn btn-primary mb-3" type="submit">완료</button>
             </form>
             <form action="/plan/check" method="post">
                 <input type="hidden" name="planId" value="${plan.planId}">
                 <input type="hidden" name="doState" value="N">
-                <button type="submit">포기</button>
+                <button class="btn btn-primary mb-3" type="submit">포기</button>
             </form>
         </c:if>
     </div>

@@ -15,9 +15,12 @@
     <c:forEach var="v" items="${planList}">
         <tr>
             <td><a href="/detail/${v.planId}">${v.planTitle}</a></td>
-            <td>${v.doState}</td>
+            <td>
+                <c:if test="${v.doState eq 'Y'}">O</c:if>
+                <c:if test="${v.doState eq 'N'}">X</c:if>
+            </td>
             <td>${v.replyCount}</td>
-            <td>${v.seeId}</td>
+            <td><c:if test="${v.seeId ne null}">O</c:if></td>
             <td>
                 <fmt:formatDate value="${v.planEndDate}" pattern="M.dd" type="date"/>
             </td>
