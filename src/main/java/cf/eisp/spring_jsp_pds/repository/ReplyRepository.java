@@ -16,4 +16,6 @@ public interface ReplyRepository {
     void deleteReply(Integer replyId);
 
     Reply findByReplyId(Integer intReplyId);
+
+    void deleteByPlanId(Integer planId);
 }

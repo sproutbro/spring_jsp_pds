@@ -27,7 +27,6 @@ public class ReplyController {
         String username = principal.getName();
         reply.setUsername(username);
         replyRepository.save(reply);
-        System.out.println("reply = " + reply);
         return "redirect:/detail/" + reply.getPlanId();
     }
 

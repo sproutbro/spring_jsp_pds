@@ -14,6 +14,7 @@ public class CustomPlan2 {
     private Timestamp planEndDate;
     private String planMemo;
     private String planCategory;
+    private Integer doId;
     private String doState;
     private Timestamp doDate;
     private String seeMemo;

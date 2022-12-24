@@ -21,9 +21,17 @@
         <c:if test="${plan.seeDate ne null}">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">작성일 : ${plan.seeDate}</li>
-                <li class="list-group-item">돌아보기 : ${plan.seeMemo}</li>
+                <li class="list-group-item">돌아보기 : <br/>${plan.seeMemo}</li>
             </ul>
         </c:if>
+    </c:if>
+    <c:if test="${username eq plan.username}">
+        <div class="card-body">
+            <form action="/plan/delete" method="post">
+                <input type="hidden" name="planId" value="${plan.planId}">
+                <button class="btn btn-primary">삭제하기</button>
+            </form>
+        </div>
     </c:if>
 </div>
     <table class="table">
@@ -64,15 +72,41 @@
     </table>
     <div>
         <c:if test="${username eq plan.username}">
-            <form action="/plan/check" method="post">
-                <input type="hidden" name="planId" value="${plan.planId}">
-                <input type="hidden" name="doState" value="Y">
-                <button class="btn btn-primary mb-3" type="submit">완료</button>
-            </form>
-            <form action="/plan/check" method="post">
-                <input type="hidden" name="planId" value="${plan.planId}">
-                <input type="hidden" name="doState" value="N">
-                <button class="btn btn-primary mb-3" type="submit">포기</button>
-            </form>
+            <c:if test="${plan.doState eq null}">
+                <table>
+                    <tr>
+                        <td>
+                            <form action="/plan/check" method="post">
+                                <input type="hidden" name="planId" value="${plan.planId}">
+                                <input type="hidden" name="doState" value="Y">
+                                <button class="btn btn-primary mb-3" type="submit">완료</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/plan/check" method="post">
+                                <input type="hidden" name="planId" value="${plan.planId}">
+                                <input type="hidden" name="doState" value="N">
+                                <button class="btn btn-primary mb-3" type="submit">포기</button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </c:if>
+            <c:if test="${plan.doState ne null && plan.seeDate eq null}">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/see/write" method="post" class="row">
+                        <input type="hidden" name="doId" value="${plan.doId}">
+                        <div class="mb-3">
+                            <label for="seeMemo" class="form-label">See memo</label>
+                            <textarea class="form-control" id="seeMemo" rows="3" name="seeMemo"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </c:if>
         </c:if>
     </div>

@@ -15,4 +15,7 @@
     <select id="findByReplyId" parameterType="Integer" resultType="Reply">
         select * from reply where reply_id = #{replyId}
     </select>
+    <delete id="deleteByPlanId">
+        delete from reply where plan_id = #{planId}
+    </delete>
 </mapper>

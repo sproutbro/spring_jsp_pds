@@ -36,4 +36,8 @@
         WHERE d.plan_id is null
           AND p.plan_end_date &lt; now()
     </insert>
+
+    <delete id="delete" parameterType="Integer">
+        delete from do where plan_id = #{planId}
+    </delete>
 </mapper>

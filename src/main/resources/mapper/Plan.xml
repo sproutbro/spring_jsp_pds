@@ -68,6 +68,7 @@
             p.plan_end_date,
             p.plan_memo,
             p.plan_category,
+            d.do_id,
             d.do_state,
             d.do_date,
             s.see_memo,
