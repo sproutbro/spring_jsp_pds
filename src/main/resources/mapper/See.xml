@@ -33,6 +33,8 @@
                           on r.plan_id = p.plan_id
         where
             p.username = #{username}
+          and
+            s.see_id is not null
         order by
             p.plan_end_date asc
     </select>
